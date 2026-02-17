@@ -11,91 +11,605 @@
     <p>This is my free website hosted on GitHub Pages.</p>
     <p>Edit <code>index.html</code> to change this.</p>
 
-    <a href="https://tma4is.wovn-demo-proxy.com/ja/sitemap.xml" target="_blank">https://tma4is.wovn-demo-proxy.com/ja/sitemap.xml</a><br>
+  <!-- Dashboard Nav Panel (grouped + alphabetized) -->
+<style>
+  :root{
+    --bg: #0b1220;
+    --panel: rgba(255,255,255,.06);
+    --panel2: rgba(255,255,255,.08);
+    --border: rgba(255,255,255,.14);
+    --text: rgba(255,255,255,.92);
+    --muted: rgba(255,255,255,.70);
+    --shadow: 0 14px 40px rgba(0,0,0,.35);
+    --radius: 16px;
+  }
 
-<a href="https://swappers.neocities.org/widget/wovn-ignore" target="_blank">https://swappers.neocities.org/widget/wovn-ignore</a><br>
+  .dash-nav {
+    color: var(--text);
+    background: linear-gradient(135deg, rgba(120,180,255,.12), rgba(255,140,210,.10));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 18px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    max-width: 1100px;
+  }
 
-<a href="https://swappers.neocities.org/widget/dynamicloading-src" target="_blank">https://swappers.neocities.org/widget/dynamicloading-src</a><br>
+  .dash-nav * { box-sizing: border-box; }
 
-<a href="https://swappers.neocities.org/widget/dynamicloading" target="_blank">https://swappers.neocities.org/widget/dynamicloading</a><br>
+  .dash-nav__top{
+    display:flex;
+    gap: 12px;
+    align-items:center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
 
-<a href="https://swappers.neocities.org/SPA/SPAspawner30k" target="_blank">https://swappers.neocities.org/SPA/SPAspawner30k</a><br>
+  .dash-nav__title{
+    display:flex;
+    flex-direction: column;
+    gap: 2px;
+  }
 
-<a href="https://swappers.neocities.org/widget/customwidget" target="_blank">https://swappers.neocities.org/widget/customwidget</a><br>
+  .dash-nav__title h2{
+    margin: 0;
+    font-size: 18px;
+    letter-spacing: .2px;
+  }
 
-<a href="https://swappers.neocities.org/versioning/locked" target="_blank">https://swappers.neocities.org/versioning/locked</a><br>
+  .dash-nav__title p{
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted);
+  }
 
-<a href="https://swappers.neocities.org/versioning/latest" target="_blank">https://swappers.neocities.org/versioning/latest</a><br>
+  .dash-nav__search{
+    display:flex;
+    gap: 10px;
+    align-items:center;
+    flex: 1 1 320px;
+    justify-content: flex-end;
+  }
 
-<a href="https://swappers.neocities.org/useful/selector" target="_blank">https://swappers.neocities.org/useful/selector</a><br>
+  .dash-nav__search input{
+    width: min(520px, 100%);
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(0,0,0,.20);
+    color: var(--text);
+    outline: none;
+  }
 
-<a href="https://swappers.neocities.org/useful/multi-host-publish" target="_blank">https://swappers.neocities.org/useful/multi-host-publish</a><br>
+  .dash-nav__search input::placeholder{ color: rgba(255,255,255,.55); }
 
-<a href="https://swappers.neocities.org/useful/iframe" target="_blank">https://swappers.neocities.org/useful/iframe</a><br>
+  .dash-nav__grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+  }
 
-<a href="https://swappers.neocities.org/useful/aswap" target="_blank">https://swappers.neocities.org/useful/aswap</a><br>
+  .dash-card{
+    border: 1px solid var(--border);
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 12px;
+    min-height: 110px;
+  }
 
-<a href="https://swappers.neocities.org/reporting/deathloop2" target="_blank">https://swappers.neocities.org/reporting/deathloop2</a><br>
+  .dash-card__head{
+    display:flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
 
-<a href="https://swappers.neocities.org/reporting/code" target="_blank">https://swappers.neocities.org/reporting/code</a><br>
+  .dash-card__head h3{
+    margin: 0;
+    font-size: 14px;
+    letter-spacing: .15px;
+  }
 
-<a href="https://swappers.neocities.org/Report%20Links/link-madness" target="_blank">https://swappers.neocities.org/Report%20Links/link-madness</a><br>
+  .dash-card__head .count{
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(0,0,0,.18);
+    color: var(--muted);
+    white-space: nowrap;
+  }
 
-<a href="https://swappers.neocities.org/Report%20Links/deathloop" target="_blank">https://swappers.neocities.org/Report%20Links/deathloop</a><br>
+  .dash-list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 6px;
+  }
 
-<a href="https://swappers.neocities.org/proxy/page1" target="_blank">https://swappers.neocities.org/proxy/page1</a><br>
+  .dash-link{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    background: rgba(0,0,0,.14);
+    color: var(--text);
+    text-decoration: none;
+    transition: transform .08s ease, border-color .08s ease, background .08s ease;
+  }
 
-<a href="https://swappers.neocities.org/proxy/page2" target="_blank">https://swappers.neocities.org/proxy/page2</a><br>
+  .dash-link:hover{
+    transform: translateY(-1px);
+    border-color: var(--border);
+    background: var(--panel2);
+  }
 
-<a href="https://tma4is.wovn-demo-proxy.com/proxy/page1" target="_blank">https://tma4is.wovn-demo-proxy.com/proxy/page1</a><br>
+  .dash-link .label{
+    font-size: 13px;
+    line-height: 1.2;
+  }
 
-<a href="https://tma4is.wovn-demo-proxy.com/proxy/page2" target="_blank">https://tma4is.wovn-demo-proxy.com/proxy/page2</a><br>
+  .dash-link .domain{
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
 
-<a href="https://swappers.neocities.org/not_found" target="_blank">https://swappers.neocities.org/not_found</a><br>
+  .dash-empty{
+    display:none;
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 12px;
+    padding: 10px 12px;
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    background: rgba(0,0,0,.12);
+  }
+</style>
 
-<a href="https://swappers.neocities.org/no-english-japanese-project/wonderbar" target="_blank">https://swappers.neocities.org/no-english-japanese-project/wonderbar</a><br>
+<nav class="dash-nav" aria-label="Staging3 dashboard navigation">
+  <div class="dash-nav__top">
+    <div class="dash-nav__title">
+      <h2>Staging3 Test Links</h2>
+      <p>Grouped + alphabetized (filterable). Opens in a new tab.</p>
+    </div>
 
-<a href="https://swappers.neocities.org/newlines/linebreaker" target="_blank">https://swappers.neocities.org/newlines/linebreaker</a><br>
+    <div class="dash-nav__search">
+      <input id="dashFilter" type="search" placeholder="Filter links (e.g., proxy, spa, versioning, sitemap)..." autocomplete="off" />
+    </div>
+  </div>
 
-<a href="https://swappers.neocities.org/newlines/line" target="_blank">https://swappers.neocities.org/newlines/line</a><br>
+  <div class="dash-nav__grid" id="dashGrid">
 
-<a href="https://swappers.neocities.org/images/new-case.html/sprint-done" target="_blank">https://swappers.neocities.org/images/new-case.html/sprint-done</a><br>
+    <!-- BACKGROUND -->
+    <section class="dash-card" data-group="background images wovn-bg-img inline">
+      <div class="dash-card__head">
+        <h3>Background</h3><span class="count">1</span>
+      </div>
+      <ul class="dash-list">
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/background-images/background-image-inline-multi" target="_blank" rel="noopener">
+            <span class="label">Background images / wovn-bg-img / inline</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+      </ul>
+    </section>
 
-<a href="https://swappers.neocities.org/html-template-master" target="_blank">https://swappers.neocities.org/html-template-master</a><br>
+    <!-- BACKEND -->
+    <section class="dash-card" data-group="backend snippet html swapper query pattern">
+      <div class="dash-card__head">
+        <h3>Backend</h3><span class="count">3</span>
+      </div>
+      <ul class="dash-list">
+        <li>
+          <a class="dash-link" href="https://part-three.neocities.org/Backend-snippet/Home" target="_blank" rel="noopener">
+            <span class="label">Backend snippet / HTML swapper / En-ja</span>
+            <span class="domain">part-three.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://part-three.neocities.org/apitest/new-hot" target="_blank" rel="noopener">
+            <span class="label">Backend query pattern (new-hot)</span>
+            <span class="domain">part-three.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://part-three.neocities.org/widget/querypattern" target="_blank" rel="noopener">
+            <span class="label">Backend query pattern (querypattern)</span>
+            <span class="domain">part-three.neocities.org</span>
+          </a>
+        </li>
+      </ul>
+    </section>
 
-<a href="https://swappers.neocities.org/background-images/background-image-inline-multi" target="_blank">https://swappers.neocities.org/background-images/background-image-inline-multi</a><br>
+    <!-- EXCLUSIONS & IGNORE -->
+    <section class="dash-card" data-group="exclude exclusion ignore wovn-ignore path url wildcard japanese">
+      <div class="dash-card__head">
+        <h3>Exclusions &amp; Ignore</h3><span class="count">6</span>
+      </div>
+      <ul class="dash-list">
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/%E6%97%A5%E6%9C%AC%E8%AA%9E/%E9%A6%AC%E9%B9%BF%E9%87%8E%E9%83%8E/%E5%A4%96%E6%A5%AD" target="_blank" rel="noopener">
+            <span class="label">Excluded path Japanese URL</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://rust-amazing-sousaphone.glitch.me/wovn-data-ignoredd.html" target="_blank" rel="noopener">
+            <span class="label">&lt;html data-wovn-ignore</span>
+            <span class="domain">glitch.me</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://rust-amazing-sousaphone.glitch.me/wovn-ignored-html.html" target="_blank" rel="noopener">
+            <span class="label">&lt;html wovn-ignore</span>
+            <span class="domain">glitch.me</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/widget/pathexclude/path" target="_blank" rel="noopener">
+            <span class="label">Path exclusion</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/widget/urlexclude" target="_blank" rel="noopener">
+            <span class="label">URL exclusion</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/%20wildcardterms/wild" target="_blank" rel="noopener">
+            <span class="label">Wildcard terms</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+      </ul>
+    </section>
 
-<a href="https://swappers.neocities.org/404/links-to-broken-toy" target="_blank">https://swappers.neocities.org/404/links-to-broken-toy</a><br>
+    <!-- IMAGES -->
+    <section class="dash-card" data-group="images duplicate relative path queries">
+      <div class="dash-card__head">
+        <h3>Images</h3><span class="count">2</span>
+      </div>
+      <ul class="dash-list">
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/images/new-case.html/sprint-done" target="_blank" rel="noopener">
+            <span class="label">Duplicate images test (sprint-done)</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/images/new-case.html/soichiro" target="_blank" rel="noopener">
+            <span class="label">Best image test page</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+      </ul>
+    </section>
 
-<a href="https://swappers.neocities.org/%E6%97%A5%E6%9C%AC%E8%AA%9E/%E9%A6%AC%E9%B9%BF%E9%87%8E%E9%83%8E/%E5%A4%96%E6%A5%AD" target="_blank">https://swappers.neocities.org/%E6%97%A5%E6%9C%AC%E8%AA%9E/%E9%A6%AC%E9%B9%BF%E9%87%8E%E9%83%8E/%E5%A4%96%E6%A5%AD</a><br>
+    <!-- LINKS/CSS/JS -->
+    <section class="dash-card" data-group="links css js template master">
+      <div class="dash-card__head">
+        <h3>Links / CSS / JS</h3><span class="count">1</span>
+      </div>
+      <ul class="dash-list">
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/html-template-master" target="_blank" rel="noopener">
+            <span class="label">Links/CSS/JS - All pages</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+      </ul>
+    </section>
 
-<a href="https://swappers.neocities.org/%20wildcardterms/wild" target="_blank">https://swappers.neocities.org/%20wildcardterms/wild</a><br>
+    <!-- NEWLINES -->
+    <section class="dash-card" data-group="new lines line breaks">
+      <div class="dash-card__head">
+        <h3>Newlines</h3><span class="count">2</span>
+      </div>
+      <ul class="dash-list">
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/newlines/line" target="_blank" rel="noopener">
+            <span class="label">new lines / line breaks (line)</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/newlines/linebreaker" target="_blank" rel="noopener">
+            <span class="label">new lines / line breaks (linebreaker)</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+      </ul>
+    </section>
 
-<a href="https://staging3-wovn.com/projects#/66a9cf4caca85701719d3b4a/subtitle/videos" target="_blank">https://staging3-wovn.com/projects#/66a9cf4caca85701719d3b4a/subtitle/videos</a><br>
+    <!-- PROXY -->
+    <section class="dash-card" data-group="proxy sitemap translated demo">
+      <div class="dash-card__head">
+        <h3>Proxy</h3><span class="count">5</span>
+      </div>
+      <ul class="dash-list">
+        <li>
+          <a class="dash-link" href="https://tma4is.wovn-demo-proxy.com/proxy/page1" target="_blank" rel="noopener">
+            <span class="label">proxy demo (page1)</span>
+            <span class="domain">wovn-demo-proxy.com</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://tma4is.wovn-demo-proxy.com/proxy/page2" target="_blank" rel="noopener">
+            <span class="label">proxy demo (page2)</span>
+            <span class="domain">wovn-demo-proxy.com</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/proxy/page1" target="_blank" rel="noopener">
+            <span class="label">proxy (page1)</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/proxy/page2" target="_blank" rel="noopener">
+            <span class="label">proxy (page2)</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://tma4is.wovn-demo-proxy.com/ja/sitemap.xml" target="_blank" rel="noopener">
+            <span class="label">translated sitemap (proxy)</span>
+            <span class="domain">wovn-demo-proxy.com</span>
+          </a>
+        </li>
+      </ul>
+    </section>
 
-<a href="https://staging3-wovn.com/projects?search=index#/6687a6a84bd2b4015e9fea57/web/pages" target="_blank">https://staging3-wovn.com/projects?search=index#/6687a6a84bd2b4015e9fea57/web/pages</a><br>
+    <!-- REPORTING -->
+    <section class="dash-card" data-group="reporting report iframe links code">
+      <div class="dash-card__head">
+        <h3>Reporting</h3><span class="count">4</span>
+      </div>
+      <ul class="dash-list">
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/reporting/code" target="_blank" rel="noopener">
+            <span class="label">code tag</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/Report%20Links/deathloop" target="_blank" rel="noopener">
+            <span class="label">iframe with links</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/reporting/deathloop2" target="_blank" rel="noopener">
+            <span class="label">iframe with links 2</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/Report%20Links/link-madness" target="_blank" rel="noopener">
+            <span class="label">links to other wovn projects/snippets</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+      </ul>
+    </section>
 
-<a href="https://rust-amazing-sousaphone.glitch.me/wovn-ignored-html.html" target="_blank">https://rust-amazing-sousaphone.glitch.me/wovn-ignored-html.html</a><br>
+    <!-- SPA -->
+    <section class="dash-card" data-group="spa spawner tool tester">
+      <div class="dash-card__head">
+        <h3>SPA</h3><span class="count">3</span>
+      </div>
+      <ul class="dash-list">
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/SPA/SPA3.0-Staging3" target="_blank" rel="noopener">
+            <span class="label">SPA tester page (Staging3)</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/SPA/SPAspawner30k" target="_blank" rel="noopener">
+            <span class="label">SPA spawner with nice features</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/SPA/SPA-widget-tool" target="_blank" rel="noopener">
+            <span class="label">SPA and widget tool</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+      </ul>
+    </section>
 
-<a href="https://rust-amazing-sousaphone.glitch.me/wovn-data-ignoredd.html" target="_blank">https://rust-amazing-sousaphone.glitch.me/wovn-data-ignoredd.html</a><br>
+    <!-- STAGING3-WOVN APP -->
+    <section class="dash-card" data-group="staging3 wovn app projects">
+      <div class="dash-card__head">
+        <h3>Staging3 App</h3><span class="count">2</span>
+      </div>
+      <ul class="dash-list">
+        <li>
+          <a class="dash-link" href="https://staging3-wovn.com/projects?search=index#/6687a6a84bd2b4015e9fea57/web/pages" target="_blank" rel="noopener">
+            <span class="label">index vs / pages</span>
+            <span class="domain">staging3-wovn.com</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://staging3-wovn.com/projects#/66a9cf4caca85701719d3b4a/subtitle/videos" target="_blank" rel="noopener">
+            <span class="label">video project</span>
+            <span class="domain">staging3-wovn.com</span>
+          </a>
+        </li>
+      </ul>
+    </section>
 
-<a href="https://swappers.neocities.org/widget/urlexclude" target="_blank">https://swappers.neocities.org/widget/urlexclude</a><br>
+    <!-- USEFUL -->
+    <section class="dash-card" data-group="useful selector iframe multi host publish aswap embedded">
+      <div class="dash-card__head">
+        <h3>Useful</h3><span class="count">4</span>
+      </div>
+      <ul class="dash-list">
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/useful/aswap" target="_blank" rel="noopener">
+            <span class="label">Duplicate images, relative path, diff domain, queries</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/useful/iframe" target="_blank" rel="noopener">
+            <span class="label">Iframe with widget</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/useful/multi-host-publish" target="_blank" rel="noopener">
+            <span class="label">Multi-host-publish</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/useful/selector" target="_blank" rel="noopener">
+            <span class="label">Embedded widget</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+      </ul>
+    </section>
 
-<a href="https://swappers.neocities.org/widget/pathexclude/path" target="_blank">https://swappers.neocities.org/widget/pathexclude/path</a><br>
+    <!-- VERSIONING -->
+    <section class="dash-card" data-group="versioning widget locked latest">
+      <div class="dash-card__head">
+        <h3>Versioning</h3><span class="count">2</span>
+      </div>
+      <ul class="dash-list">
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/versioning/latest" target="_blank" rel="noopener">
+            <span class="label">Widget versioning (Latest)</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/versioning/locked" target="_blank" rel="noopener">
+            <span class="label">Widget versioning (Locked)</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+      </ul>
+    </section>
 
-<a href="https://swappers.neocities.org/SPA/SPA-widget-tool" target="_blank">https://swappers.neocities.org/SPA/SPA-widget-tool</a><br>
+    <!-- WIDGET -->
+    <section class="dash-card" data-group="widget custom shared values dynamic loading wovn ignore">
+      <div class="dash-card__head">
+        <h3>Widget</h3><span class="count">4</span>
+      </div>
+      <ul class="dash-list">
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/widget/customwidget" target="_blank" rel="noopener">
+            <span class="label">Custom widget</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/widget/dynamicloading" target="_blank" rel="noopener">
+            <span class="label">Shared values page 1</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/widget/dynamicloading-src" target="_blank" rel="noopener">
+            <span class="label">Shared values page 2</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/widget/wovn-ignore" target="_blank" rel="noopener">
+            <span class="label">Wovn-ignore</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+      </ul>
+    </section>
 
-<a href="https://part-three.neocities.org/Backend-snippet/Home" target="_blank">https://part-three.neocities.org/Backend-snippet/Home</a><br>
+    <!-- OTHER -->
+    <section class="dash-card" data-group="404 not found non english japanese proxyproject hardload">
+      <div class="dash-card__head">
+        <h3>Other</h3><span class="count">3</span>
+      </div>
+      <ul class="dash-list">
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/proxy/proxyproject/hardload" target="_blank" rel="noopener">
+            <span class="label">Large image page with delay</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/no-english-japanese-project/wonderbar" target="_blank" rel="noopener">
+            <span class="label">Non-English/Non-Japanese page</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+        <li>
+          <a class="dash-link" href="https://swappers.neocities.org/not_found" target="_blank" rel="noopener">
+            <span class="label">404 page</span>
+            <span class="domain">swappers.neocities.org</span>
+          </a>
+        </li>
+      </ul>
+    </section>
 
-<a href="https://part-three.neocities.org/apitest/new-hot" target="_blank">https://part-three.neocities.org/apitest/new-hot</a><br>
+  </div>
 
-<a href="https://part-three.neocities.org/widget/querypattern" target="_blank">https://part-three.neocities.org/widget/querypattern</a><br>
+  <div class="dash-empty" id="dashEmpty">No matches. Try a different keyword.</div>
+</nav>
 
-<a href="https://swappers.neocities.org/SPA/SPA3.0-Staging3" target="_blank">https://swappers.neocities.org/SPA/SPA3.0-Staging3</a><br>
+<script>
+  // Simple filter (kept lightweight; safe to remove if you want zero JS)
+  (function () {
+    const input = document.getElementById('dashFilter');
+    const grid = document.getElementById('dashGrid');
+    const empty = document.getElementById('dashEmpty');
 
-<a href="https://swappers.neocities.org/images/new-case.html/soichiro" target="_blank">https://swappers.neocities.org/images/new-case.html/soichiro</a><br>
+    function normalize(s){ return (s || '').toLowerCase(); }
 
-<a href="https://swappers.neocities.org/proxy/proxyproject/hardload" target="_blank">https://swappers.neocities.org/proxy/proxyproject/hardload</a><br>
+    function applyFilter() {
+      const q = normalize(input.value).trim();
+      let anyVisible = false;
+
+      const cards = Array.from(grid.querySelectorAll('.dash-card'));
+      cards.forEach(card => {
+        const groupText = normalize(card.getAttribute('data-group'));
+        const links = Array.from(card.querySelectorAll('.dash-link'));
+
+        let cardHasMatch = false;
+        links.forEach(a => {
+          const text = normalize(a.textContent);
+          const href = normalize(a.getAttribute('href'));
+          const match = !q || text.includes(q) || href.includes(q) || groupText.includes(q);
+          a.closest('li').style.display = match ? '' : 'none';
+          if (match) cardHasMatch = true;
+        });
+
+        card.style.display = cardHasMatch ? '' : 'none';
+        if (cardHasMatch) anyVisible = true;
+      });
+
+      empty.style.display = anyVisible ? 'none' : 'block';
+    }
+
+    input.addEventListener('input', applyFilter);
+    applyFilter();
+  })();
+</script>
+
 
   </body>
 </html>
