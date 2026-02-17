@@ -1,0 +1,484 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Command Center</title>
+  <meta name="description" content="Copy-only snippet command center (no scripts executed)." />
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.09);
+      --border:rgba(255,255,255,.14);
+      --text:rgba(255,255,255,.90);
+      --muted:rgba(255,255,255,.65);
+      --ok:#44d19d;
+      --warn:#ffcf5a;
+      --shadow:0 18px 50px rgba(0,0,0,.45);
+      --r:16px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(900px 600px at 15% 10%, rgba(68,209,157,0.18), transparent 55%),
+        radial-gradient(900px 600px at 85% 20%, rgba(255,207,90,0.14), transparent 55%),
+        radial-gradient(900px 600px at 50% 95%, rgba(99,160,255,0.14), transparent 50%),
+        var(--bg);
+      min-height:100vh;
+    }
+
+    header{
+      position: sticky;
+      top:0;
+      z-index:10;
+      backdrop-filter: blur(10px);
+      background: rgba(11,18,32,0.72);
+      border-bottom: 1px solid var(--border);
+    }
+    .wrap{
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+    .topbar{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    h1{
+      margin:0;
+      font-size: 18px;
+      letter-spacing: .2px;
+    }
+    .subtitle{
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+      max-width: 70ch;
+    }
+    .badge{
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .controls{
+      margin-top: 14px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items:center;
+    }
+    .search{
+      flex: 1 1 260px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      padding: 10px 12px;
+      border-radius: 14px;
+    }
+    .search input{
+      width:100%;
+      border:0;
+      outline:0;
+      background: transparent;
+      color: var(--text);
+      font-size: 13px;
+    }
+    .search svg{ opacity: .8; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.92);
+      padding: 10px 12px;
+      cursor:pointer;
+      transition: transform .06s ease, background .15s ease, border-color .15s ease;
+      user-select:none;
+      white-space: nowrap;
+    }
+    .btn:hover{
+      background: rgba(255,255,255,0.11);
+      border-color: rgba(255,255,255,0.24);
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btn:disabled{ opacity:.55; cursor:not-allowed; }
+
+    .icon{ width: 16px; height: 16px; display:inline-block; }
+
+    .notice{
+      margin-top: 18px;
+      border: 1px dashed rgba(255,255,255,0.20);
+      background: rgba(255,255,255,0.04);
+      border-radius: var(--r);
+      padding: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .kbd{
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(0,0,0,0.25);
+      color: rgba(255,255,255,0.85);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (min-width: 860px){
+      .grid{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .card{
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.04));
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .cardHead{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.03);
+    }
+    .labelRow{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .env{
+      font-weight: 750;
+      font-size: 14px;
+    }
+    .pill{
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: rgba(255,255,255,0.04);
+    }
+    .pill.ok{ border-color: rgba(68,209,157,0.40); color: rgba(68,209,157,0.95); background: rgba(68,209,157,0.12); }
+    .pill.warn{ border-color: rgba(255,207,90,0.40); color: rgba(255,207,90,0.95); background: rgba(255,207,90,0.12); }
+    .meta{
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    pre{
+      margin: 14px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.35);
+      overflow:auto;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.92);
+      white-space: pre;
+    }
+
+    .status{
+      padding: 0 14px 14px;
+      font-size: 12px;
+      color: var(--muted);
+      min-height: 16px;
+      text-align: right;
+    }
+
+    footer{
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      padding: 18px 0;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <div class="topbar">
+        <div>
+          <h1>Command Center</h1>
+          <div class="subtitle">
+            Snippets are displayed as text (never executed) but copied as fully working
+            <span class="kbd">&lt;script&gt;</span> tags.
+          </div>
+        </div>
+        <div class="badge">Safe display mode</div>
+      </div>
+
+      <div class="controls">
+        <div class="search" role="search">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <input id="q" type="search" placeholder="Search snippets (prod, staging9, key...)" autocomplete="off" />
+        </div>
+
+        <button class="btn" id="copyAllBtn" type="button" title="Copy all visible snippets">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9 9h10v10H9V9Z" stroke="currentColor" stroke-width="1.8" />
+            <path d="M5 15a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2" stroke="currentColor" stroke-width="1.8" />
+          </svg>
+          <span id="copyAllLabel">Copy all</span>
+        </button>
+
+        <button class="btn" id="clearBtn" type="button" title="Clear search">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <span>Clear</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="notice">
+        <b>Guarantee:</b> Snippets live as HTML-escaped text inside <span class="kbd">&lt;template&gt;</span> elements and are
+        rendered with <span class="kbd">textContent</span>. Nothing executes.
+        <br />
+        <b>Tip:</b> Click a code block to select it quickly, then <span class="kbd">Ctrl/Cmd</span>+<span class="kbd">C</span>.
+      </div>
+
+      <div class="grid" id="cards" aria-live="polite"></div>
+
+      <footer>
+        <div class="wrap" style="padding:0;">
+          Built to expand — add more <span class="kbd">&lt;template class="snippet"&gt;</span> blocks below.
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <!--
+    Snippets are stored as TEXT (escaped) inside templates.
+    That means no external scripts load, and we also avoid breaking the page script parser.
+  -->
+  <template class="snippet"
+    data-title="staging3 swappers main"
+    data-tag="staging"
+    data-tone="warn"
+    data-key="TmA4Is"
+  >&lt;script src="https://j.staging3-wovn.com/1" data-wovnio="key=TmA4Is" async&gt;&lt;/script&gt;</template>
+
+  <template class="snippet"
+    data-title="staging9 swappers backup"
+    data-tag="staging"
+    data-tone="warn"
+    data-key="XpdDkd"
+  >&lt;script src="https://j.staging9-wovn.com/1" data-wovnio="key=XpdDkd" async&gt;&lt;/script&gt;</template>
+
+  <template class="snippet"
+    data-title="prod main"
+    data-tag="prod"
+    data-tone="ok"
+    data-key="iPKM2v"
+  >&lt;script src="https://j.wovn.io/1" data-wovnio="key=iPKM2v" async&gt;&lt;/script&gt;</template>
+
+  <template class="snippet"
+    data-title="prod widget versioning"
+    data-tag="prod"
+    data-tone="ok"
+    data-key="wIiMf9"
+  >&lt;script src="https://data.wovn.io/widget/wIiMf9" data-wovnio="key=wIiMf9" async&gt;&lt;/script&gt;</template>
+
+  <script>
+    function readSnippets() {
+      const templates = Array.from(document.querySelectorAll("template.snippet"));
+      return templates.map(tpl => ({
+        title: tpl.dataset.title || "Untitled",
+        tag: tpl.dataset.tag || "misc",
+        tone: tpl.dataset.tone || "",
+        key: tpl.dataset.key || "",
+        // textContent decodes entities into real characters, but remains inert because we never inject as HTML
+        code: (tpl.content.textContent || tpl.textContent || "").trim()
+      }));
+    }
+
+    async function copyText(text){
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+      }
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+
+    function matches(item, q){
+      if (!q) return true;
+      const hay = [item.title, item.tag, item.key, item.code].join(" ").toLowerCase();
+      return hay.includes(q.toLowerCase());
+    }
+
+    function buildCard(item){
+      const card = document.createElement("section");
+      card.className = "card";
+
+      const head = document.createElement("div");
+      head.className = "cardHead";
+
+      const left = document.createElement("div");
+
+      const labelRow = document.createElement("div");
+      labelRow.className = "labelRow";
+
+      const env = document.createElement("div");
+      env.className = "env";
+      env.textContent = item.title;
+
+      const pillTag = document.createElement("span");
+      pillTag.className = `pill ${item.tone || ""}`;
+      pillTag.textContent = item.tag;
+
+      const pillKey = document.createElement("span");
+      pillKey.className = "pill";
+      pillKey.textContent = `key: ${item.key}`;
+
+      labelRow.appendChild(env);
+      labelRow.appendChild(pillTag);
+      labelRow.appendChild(pillKey);
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.textContent = "Displayed as text (not executed). Copied as a working script tag.";
+
+      left.appendChild(labelRow);
+      left.appendChild(meta);
+
+      const btn = document.createElement("button");
+      btn.className = "btn";
+      btn.type = "button";
+      btn.innerHTML = `
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9 9h10v10H9V9Z" stroke="currentColor" stroke-width="1.8" />
+          <path d="M5 15a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2" stroke="currentColor" stroke-width="1.8" />
+        </svg>
+        <span>Copy</span>
+      `;
+
+      head.appendChild(left);
+      head.appendChild(btn);
+
+      const pre = document.createElement("pre");
+      pre.textContent = item.code;
+
+      const status = document.createElement("div");
+      status.className = "status";
+
+      btn.addEventListener("click", async () => {
+        try{
+          await copyText(item.code);
+          status.textContent = "Copied!";
+          setTimeout(() => status.textContent = "", 1200);
+        }catch{
+          status.textContent = "Copy failed (clipboard blocked).";
+          setTimeout(() => status.textContent = "", 2200);
+        }
+      });
+
+      pre.addEventListener("click", () => {
+        const sel = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(pre);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      });
+
+      card.appendChild(head);
+      card.appendChild(pre);
+      card.appendChild(status);
+
+      return card;
+    }
+
+    const qEl = document.getElementById("q");
+    const clearBtn = document.getElementById("clearBtn");
+    const copyAllBtn = document.getElementById("copyAllBtn");
+    const copyAllLabel = document.getElementById("copyAllLabel");
+    const cardsEl = document.getElementById("cards");
+
+    const ALL = readSnippets();
+
+    function render(){
+      const q = (qEl.value || "").trim();
+      cardsEl.innerHTML = "";
+      const visible = ALL.filter(s => matches(s, q));
+      for (const item of visible) cardsEl.appendChild(buildCard(item));
+      copyAllBtn.disabled = visible.length === 0;
+    }
+
+    qEl.addEventListener("input", render);
+
+    clearBtn.addEventListener("click", () => {
+      qEl.value = "";
+      qEl.focus();
+      render();
+    });
+
+    copyAllBtn.addEventListener("click", async () => {
+      const q = (qEl.value || "").trim();
+      const visible = ALL.filter(s => matches(s, q));
+      const text = visible.map(s => s.code).join("\n\n");
+      try{
+        await copyText(text);
+        copyAllLabel.textContent = "Copied all";
+        setTimeout(() => copyAllLabel.textContent = "Copy all", 1400);
+      }catch{
+        copyAllLabel.textContent = "Copy failed";
+        setTimeout(() => copyAllLabel.textContent = "Copy all", 1600);
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
